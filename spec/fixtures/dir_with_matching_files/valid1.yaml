@@ -1,0 +1,21 @@
+rubygems:
+  capybara-webkit:
+    mac_os_x/macports:
+      default:
+        - qt4-mac-devel
+    mac_os_x/homebrew:
+      default:
+        - qt
+    ubuntu/apt:
+      default:
+        - libqtwebkit-dev
+      [10.04,10.04.1,10.04.2,10.04.3,10.04.4]:
+        - libqt4-dev
+  rmagick:
+    mac_os_x/homebrew:
+      default:
+        - imagemagick
+    ubuntu/apt:
+      default:
+        - imagemagick
+        - libmagick9-dev

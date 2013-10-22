@@ -1,0 +1,9 @@
+rubygems:
+  rmagick:
+    ubuntu/apt:
+      default:
+        - imagemagick
+        - libmagick9-dev
+  curb:
+    default:
+      - curl

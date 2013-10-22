@@ -1,0 +1,11 @@
+rubygems:
+  capybara-webkit:
+    mac_os_x/macports:
+      default:
+        - qt4-mac-devel
+    mac_os_x/homebrew:
+      default:
+        - qt
+    ubuntu/apt:
+      default:
+        - libqtwebkit-dev
