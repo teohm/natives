@@ -5,7 +5,7 @@ module Natives
 
     CATALOG_PATH_IN_GEM = File.absolute_path(File.join(
                             File.dirname(__FILE__), '..', '..', 'catalogs'))
-    CATALOG_PATH_IN_WORKING_DIR = File.absolute_path(File.join('.', 'catalogs'))
+    CATALOG_PATH_IN_WORKING_DIR = File.absolute_path(File.join('.', 'natives-catalogs'))
 
     CATALOG_PATHS = [
       CATALOG_PATH_IN_GEM,
