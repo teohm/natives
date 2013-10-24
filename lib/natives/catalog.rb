@@ -1,4 +1,5 @@
 require 'natives/catalog/loader'
+require 'natives/catalog/selector'
 
 module Natives
   class Catalog
@@ -12,13 +13,30 @@ module Natives
       CATALOG_PATH_IN_WORKING_DIR
     ].freeze
 
-    def self.load
-      loader = new_loader
-      loader.load_from_paths(CATALOG_PATHS)
+    attr_reader :platform, :platform_version, :package_provider, :name
+
+    def initialize(catalog_name, platform, platform_version, package_provider)
+      reload
+
+      @name = catalog_name.to_s
+      @platform = platform.to_s
+      @platform_version = platform_version.to_s
+      @package_provider = package_provider.to_s
     end
 
-    def self.new_loader
-      Loader.new
+    def reload
+      @catalogs = Loader.new.load_from_paths(CATALOG_PATHS)
+    end
+
+    def to_hash
+      @catalogs.fetch(self.name, {})
+    end
+
+    def native_packages_for(entry_name)
+      Array(
+        Selector.new(self.to_hash.fetch(entry_name, {})).
+          value_for(@platform, @platform_version, @package_provider)
+      )
     end
 
   end
