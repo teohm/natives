@@ -1,7 +1,6 @@
 source "http://rubygems.org"
 # Add dependencies required to use your gem here.
 # Example:
-gem "chef", '>= 11'
 
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.
