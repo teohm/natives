@@ -69,6 +69,11 @@ describe Natives::Catalog do
                 '13.10' => 'value1',
                 'default' => 'value2'
               }
+            },
+            'curb' => {
+              'ubuntu/apt' => {
+                'default' => 'value3'
+              }
             }
           },
         })
@@ -82,6 +87,18 @@ describe Natives::Catalog do
     it "returns empty list if the given catalog entry name does not exist" do
       catalog = Natives::Catalog.new(:rubygems, 'ubuntu', '13.10', 'apt')
       expect(catalog.native_packages_for('notfound')).to eq([])
+    end
+
+    it "return native packages for the given catalog entry name list" do
+      catalog = Natives::Catalog.new(:rubygems, 'ubuntu', '13.10', 'apt')
+      expect(catalog.native_packages_for(
+        'nokogiri', 'notfound', 'curb')).to eq(['value1', 'value3'])
+    end
+
+    it "return native packages for the given catalog entry name array" do
+      catalog = Natives::Catalog.new(:rubygems, 'ubuntu', '13.10', 'apt')
+      expect(catalog.native_packages_for(
+        ['nokogiri', 'notfound', 'curb'])).to eq(['value1', 'value3'])
     end
   end
 

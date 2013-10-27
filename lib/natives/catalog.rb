@@ -32,11 +32,12 @@ module Natives
       @catalogs.fetch(self.name, {})
     end
 
-    def native_packages_for(entry_name)
-      Array(
+    def native_packages_for(*entry_names)
+      packages = Array(entry_names).flatten.map do |entry_name|
         Selector.new(self.to_hash.fetch(entry_name, {})).
           value_for(@platform, @platform_version, @package_provider)
-      )
+      end
+      packages.flatten.compact
     end
 
   end
