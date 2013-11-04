@@ -9,3 +9,48 @@ rubygems:
     ubuntu/apt:
       default:
         - libqtwebkit-dev
+  curb:
+    mac_os_x/homebrew:
+      default:
+        - curl
+    ubuntu/apt:
+      default:
+        - libcurl4-openssl-dev
+  nokogiri:
+    ubuntu/apt:
+      default:
+        - libxslt-dev
+        - libxml2-dev
+  pg:
+    mac_os_x/homebrew:
+      default:
+        - postgres
+    ubuntu/apt:
+      default:
+        - libpq-dev
+  rmagick:
+    mac_os_x/homebrew:
+      default:
+        - imagemagick
+    ubuntu/apt:
+      default:
+        - imagemagick
+        - libmagickwand-dev
+  ruby-tesseract-ocr:
+    mac_os_x/homebrew:
+      default:
+        - tesseract
+    ubuntu/apt:
+      default:
+        - libtesseract-dev
+        - libleptonica-dev
+  sqlite3:
+    mac_os_x/homebrew:
+      default:
+        - sqlite
+    ubuntu/apt:
+      default:
+        - libsqlite3-dev
+    fedora/yum:
+      default:
+        - sqlite-devel
