@@ -17,8 +17,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "natives-catalog"
   gem.homepage = "http://github.com/teohm/natives-catalog"
   gem.license = "MIT"
-  gem.summary = %Q{A catalog of native packages for ruby gems.}
-  gem.description = %Q{A catalog of native packages in different platforms required by ruby gems.}
+  gem.summary = %Q{Maintains a catalog of native library packages required by Ruby gems.}
+  gem.description = %Q{Maintains a catalog of native library packages required by Ruby gems, and a parser to load catalog files. It can be extended to maintain additional catalogs e.g. for other package dependency manager such as npm.}
   gem.email = "teohuiming@gmail.com"
   gem.authors = ["Huiming Teo"]
   # dependencies defined in Gemfile
