@@ -10,7 +10,10 @@ describe Natives::Catalog do
     end
 
     it "requires caller to provide platform and package provider details" do
-      catalog = Natives::Catalog.new('rubygems', 'mac_os_x', '10.7.5', 'homebrew')
+      catalog = Natives::Catalog.new('rubygems',
+                                     'mac_os_x', '10.7.5',
+                                     'homebrew')
+
       expect(catalog.name).to eq('rubygems')
       expect(catalog.platform).to eq('mac_os_x')
       expect(catalog.platform_version).to eq('10.7.5')
@@ -20,18 +23,45 @@ describe Natives::Catalog do
 
   describe "#reload" do
     it "reloads catalogs from default catalog paths" do
-      Natives::Catalog::Loader.any_instance.
+      loader = double()
+      loader.
         should_receive(:load_from_paths).
-        with(Natives::Catalog::CATALOG_PATHS).
+        with([
+          Natives::Catalog::CATALOG_PATH_IN_GEM,
+          File.absolute_path(File.join(Dir.pwd, 'natives-catalogs'))
+        ]).
         and_return({
           'rubygems' => {'foo' => {'key' => 'value'}},
           'npm' => {'bar' => {'key' => 'value'}}
         })
 
       catalog = Natives::Catalog.new('rubygems',
-                                     'mac_os_x', '10.7.5', 'homebrew')
+                                     'mac_os_x', '10.7.5', 'homebrew',
+                                     loader: loader)
 
       expect(catalog.to_hash).to eq({'foo' => {'key' => 'value'}})
+    end
+
+    it "reloads catalogs from given working directory" do
+      loader = double()
+      loader.
+        should_receive(:load_from_paths).
+        with([
+          Natives::Catalog::CATALOG_PATH_IN_GEM,
+          '/path/to/working_dir/natives-catalogs'
+        ]).
+        and_return({
+          'rubygems' => {'foo' => {'key' => 'value'}},
+          'npm' => {'bar' => {'key' => 'value'}}
+        })
+
+      catalog = Natives::Catalog.new('rubygems',
+                                     'mac_os_x', '10.7.5', 'homebrew',
+                                     loader: loader,
+                                     working_dir: '/path/to/working_dir')
+
+      expect(catalog.to_hash).to eq({'foo' => {'key' => 'value'}})
+
     end
   end
 
@@ -39,7 +69,6 @@ describe Natives::Catalog do
     before do
       Natives::Catalog::Loader.any_instance.
         stub(:load_from_paths).
-        with(Natives::Catalog::CATALOG_PATHS).
         and_return({
           'rubygems' => {'foo' => {'key' => 'value'}},
           'npm' => {'bar' => {'key' => 'value'}}
@@ -61,7 +90,6 @@ describe Natives::Catalog do
     before do
       Natives::Catalog::Loader.any_instance.
         stub(:load_from_paths).
-        with(Natives::Catalog::CATALOG_PATHS).
         and_return({
           'rubygems' => {
             'nokogiri' => {
@@ -99,15 +127,6 @@ describe Natives::Catalog do
       catalog = Natives::Catalog.new(:rubygems, 'ubuntu', '13.10', 'apt')
       expect(catalog.native_packages_for(
         ['nokogiri', 'notfound', 'curb'])).to eq(['value1', 'value3'])
-    end
-  end
-
-  describe "::CATALOG_PATHS" do
-    it "contains the default catalog paths" do
-      expect(Natives::Catalog::CATALOG_PATHS).to eq([
-        Natives::Catalog::CATALOG_PATH_IN_GEM,
-        Natives::Catalog::CATALOG_PATH_IN_WORKING_DIR
-      ])
     end
   end
 

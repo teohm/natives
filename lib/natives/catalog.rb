@@ -6,26 +6,29 @@ module Natives
 
     CATALOG_PATH_IN_GEM = File.absolute_path(File.join(
                             File.dirname(__FILE__), '..', '..', 'catalogs'))
-    CATALOG_PATH_IN_WORKING_DIR = File.absolute_path(File.join('.', 'natives-catalogs'))
 
-    CATALOG_PATHS = [
-      CATALOG_PATH_IN_GEM,
-      CATALOG_PATH_IN_WORKING_DIR
-    ].freeze
+    WORKING_DIR_CATALOG_DIRNAME = 'natives-catalogs'
 
     attr_reader :platform, :platform_version, :package_provider, :name
 
-    def initialize(catalog_name, platform, platform_version, package_provider)
-      reload
+    def initialize(catalog_name,
+                   platform, platform_version,
+                   package_provider,
+                   opts={})
 
       @name = catalog_name.to_s
       @platform = platform.to_s
       @platform_version = platform_version.to_s
       @package_provider = package_provider.to_s
+
+      @loader = opts.fetch(:loader, Loader.new)
+      @working_dir = opts.fetch(:working_dir, Dir.pwd)
+
+      reload
     end
 
     def reload
-      @catalogs = Loader.new.load_from_paths(CATALOG_PATHS)
+      @catalogs = @loader.load_from_paths(catalog_paths)
     end
 
     def to_hash
@@ -38,6 +41,15 @@ module Natives
           value_for(@platform, @platform_version, @package_provider)
       end
       packages.flatten.compact
+    end
+
+    protected
+
+    def catalog_paths
+      [
+        CATALOG_PATH_IN_GEM,
+        File.absolute_path(File.join(@working_dir, WORKING_DIR_CATALOG_DIRNAME))
+      ]
     end
 
   end
