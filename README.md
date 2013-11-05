@@ -9,9 +9,12 @@ It can be extended to maintain additional catalogs e.g. for other package depend
 
 It is currently used by [natives](https://github.com/teohm/natives) gem to install native packages on multiple platforms.
 
-### Calling for ruby gems catalog contributors!
+-----
+### Calling for rubygems catalog contributors!
 
-Your pull requests are welcomed to maintain the [rubygems catalog](https://github.com/teohm/natives-catalog/blob/master/catalogs/rubygems.yaml) and keep it up-to-date! 
+We need your help to populate and maintain the [rubygems catalog](https://github.com/teohm/natives-catalog/blob/master/catalogs/rubygems.yaml)! :-)
+
+-----
 
 ## Install
 
@@ -28,7 +31,7 @@ catalog = Natives::Catalog.new(
   'rubygems',
   'mac_os_x', '10.7.5',
   'homebrew')
-  
+
 catalog.to_hash  # returns the loaded catalog hash
 
 catalog.reload   # reloads catalog files
