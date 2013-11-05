@@ -1,5 +1,8 @@
 # natives-catalog
 
+[![Gem Version](https://badge.fury.io/rb/natives-catalog.png)](http://badge.fury.io/rb/natives-catalog)
+[![Code Climate](https://codeclimate.com/github/teohm/natives-catalog.png)](https://codeclimate.com/github/teohm/natives-catalog)
+
 Maintains a catalog of native library packages required by Ruby gems, and a parser to load catalog files.
 
 It can be extended to maintain additional catalogs e.g. for other package dependency manager such as `npm`.
