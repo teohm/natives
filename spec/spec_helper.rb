@@ -12,7 +12,17 @@ end
 # in ./support/ and its subdirectories.
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
 
+module Natives
+  module FixtureSupport
+    def fixture_path
+      RSpec.configuration.fixture_path
+    end
+  end
+end
+
 RSpec.configure do |config|
   config.add_setting :fixture_path
   config.fixture_path = File.join(File.dirname(__FILE__), 'fixtures')
+
+  config.include Natives::FixtureSupport
 end
