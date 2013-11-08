@@ -14,11 +14,11 @@ require 'rake'
 require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
-  gem.name = "natives-catalog"
-  gem.homepage = "http://github.com/teohm/natives-catalog"
+  gem.name = "natives"
+  gem.homepage = "http://github.com/teohm/natives"
   gem.license = "MIT"
-  gem.summary = %Q{Maintains a catalog of native library packages required by Ruby gems.}
-  gem.description = %Q{Maintains a catalog of native library packages required by Ruby gems, and a parser to load catalog files. It can be extended to maintain additional catalogs e.g. for other package dependency manager such as npm.}
+  gem.summary = %Q{Lookup native packages required by gems.}
+  gem.description = %Q{Lookup native package dependencies required by gems.}
   gem.email = "teohuiming@gmail.com"
   gem.authors = ["Huiming Teo"]
   # dependencies defined in Gemfile
