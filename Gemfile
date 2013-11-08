@@ -1,6 +1,7 @@
 source "http://rubygems.org"
 # Add dependencies required to use your gem here.
 gem "ohai"
+gem "thor"
 
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.
