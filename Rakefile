@@ -18,7 +18,7 @@ Jeweler::Tasks.new do |gem|
   gem.homepage = "http://github.com/teohm/natives"
   gem.license = "MIT"
   gem.summary = %Q{Lookup native packages required by gems.}
-  gem.description = %Q{Lookup native package dependencies required by gems.}
+  gem.description = %Q{Lookup native package dependencies required by gems on your machine.}
   gem.email = "teohuiming@gmail.com"
   gem.authors = ["Huiming Teo"]
   # dependencies defined in Gemfile

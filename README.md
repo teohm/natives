@@ -1,52 +1,78 @@
-# natives-catalog
+# natives
 
-[![Gem Version](https://badge.fury.io/rb/natives-catalog.png)](http://badge.fury.io/rb/natives-catalog)
-[![Code Climate](https://codeclimate.com/github/teohm/natives-catalog.png)](https://codeclimate.com/github/teohm/natives-catalog)
+[![Gem Version](https://badge.fury.io/rb/natives.png)](http://badge.fury.io/rb/natives)
+[![Code Climate](https://codeclimate.com/github/teohm/natives.png)](https://codeclimate.com/github/teohm/natives)
 
-Maintains a catalog of native library packages required by Ruby gems, and a parser to load catalog files.
+List native packages required by ruby gems on your machine.
 
-It can be extended to maintain additional catalogs e.g. for other package dependency manager such as `npm`.
+What it does:
 
-It is currently used by [natives](https://github.com/teohm/natives) gem to install native packages on multiple platforms.
+* maintains a [multi-platform catalog](https://github.com/teohm/natives-catalog/blob/master/catalogs/rubygems.yaml) of native packages for ruby gems.
+* detects platform, platform version using [Chef Ohai](https://github.com/opscode/ohai).
+* detects package manager.
+* returns a list of native packages based on the gems specified by you or a gemfile.
 
------
-### Calling for rubygems catalog contributors!
-
-We need your help to populate and maintain the [rubygems catalog](https://github.com/teohm/natives-catalog/blob/master/catalogs/rubygems.yaml)! :-)
-
------
 
 ## Install
 
 ```
-gem install natives-catalog
+gem install natives
 ```
 
 ## Use
 
 ```
-require 'natives/catalog'
-
-catalog = Natives::Catalog.new(
-  'rubygems',
-  'mac_os_x', '10.7.5',
-  'homebrew')
-
-catalog.to_hash  # returns the loaded catalog hash
-
-catalog.reload   # reloads catalog files
-
-catalog.native_packages_for('webcapybara', 'sqlite3')
-# => ["qt", "sqlite"]
+natives list capybara-webkit sqlite3
 ```
 
+### Have a gemfile?
+
+```
+natives list  # looks for Gemfile in current directory
+natives list --gemfile Gemfile.special
+natives list --gemfile /path/to/Gemfile.special
+```
+
+### How to install native packages?
+
+Output from `natives list` can be used together with your package manager e.g. `brew`, `apt-get`. If you need a package manager wrapper, try [pacapt](https://github.com/icy/pacapt).
+
+```
+brew install $(natives list capybara-webkit sqlite3)
+apt-get install $(natives list capybara-webkit sqlite3)
+pacapt -S $(natives list capybara-webkit sqlite3)
+```
+
+### Switch catalog
+It uses 'rubygems' catalog by default. To use a different catalog:
+
+```
+natives list --catalog npm sqlite3
+```
+
+### Custom (project-specific) catalog
+It also looks for `natives-catalogs/` in current directory. If exists, it loads all catalog files in the directory.
+
+```
+$ cd rails_app1
+$ cat natives-catalogs/catalog1.yaml
+rubygems:
+  my_gem:
+    mac_os_x/homebrew:
+      - package1
+    ubuntu/apt:
+      - package2  
+
+$ natives list my_gem   # runs on mac os x
+package1
+```
 
 ## Catalog
 
 ### Supported catalogs
 
-* **[rubygems](https://github.com/teohm/natives-catalog/blob/master/catalogs/rubygems.yaml) (calling for your PR contributions!)**
-* (new catalog contributors e.g. for `npm` are welcomed :-)
+* **[rubygems](https://github.com/teohm/natives-catalog/blob/master/catalogs/rubygems.yaml) <-- calling for contributions! :-)**
+* new catalog contributions e.g. for "npm" are welcomed too! Just submit your PR.
 
 ### Catalog load paths
 
@@ -55,7 +81,7 @@ It loads YAML files (.yaml, .yml) from the following paths in this order:
 1. `catalogs/` in this gem.
 2. `natives-catalogs/` in current working directory, if any.
 
-When there are several YAML files in a path, they are **sorted by filename** and loaded in the same order.
+When there are multiple YAML files in a path, they are **sorted by filename** and loaded in that order.
 
 ### Catalog file format
 
@@ -125,7 +151,7 @@ rubygems:
 
 #### Supported values for platform/package_provider
 
-The values are limited to the platforms and package providers [supported by Chef](https://github.com/opscode/chef/blob/master/lib/chef/platform/provider_mapping.rb), so that Chef can be used to perform the package installation (see [natives](https://github.com/teohm/natives) gem).
+Not in the list? No worry, submit a PR to patch [`host_detection/package_provider.rb`](https://github.com/teohm/natives/blob/master/lib/natives/host_detection/package_provider.rb).
 
 ```
 aix/aix
@@ -160,7 +186,7 @@ xenserver/yum
 ```
 
 
-## Contributing to natives-catalog
+## Contributing to natives
 
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet.
 * Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it.
