@@ -2,6 +2,7 @@
 
 [![Gem Version](https://badge.fury.io/rb/natives.png)](http://badge.fury.io/rb/natives)
 [![Code Climate](https://codeclimate.com/github/teohm/natives.png)](https://codeclimate.com/github/teohm/natives)
+[![Build Status](https://travis-ci.org/teohm/natives.png)](https://travis-ci.org/teohm/natives)
 
 List native packages required by ruby gems on your machine.
 
@@ -61,7 +62,7 @@ rubygems:
     mac_os_x/homebrew:
       - package1
     ubuntu/apt:
-      - package2  
+      - package2
 
 $ natives list my_gem   # runs on mac os x
 package1
