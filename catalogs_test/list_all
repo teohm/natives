@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
+require 'psych'
 require 'yaml'
 require 'fileutils'
 

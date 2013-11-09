@@ -1,4 +1,5 @@
 require 'natives/catalog/merger'
+require 'psych'
 require 'yaml'
 
 module Natives
