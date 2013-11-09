@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+
+require 'yaml'
+require 'fileutils'
+
+test_home = File.expand_path(File.dirname(__FILE__))
+project_home = File.expand_path(File.join(test_home, '..'))
+
+rubygems_catalog_file = File.join(
+  project_home, 'catalogs', 'rubygems.yaml')
+
+catalog = YAML.load_file(rubygems_catalog_file)
+gem_names = catalog["rubygems"].keys
+
+puts gem_names

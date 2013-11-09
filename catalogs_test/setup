@@ -1,0 +1,20 @@
+#!/usr/bin/env ruby
+
+require 'yaml'
+require 'fileutils'
+
+test_home = File.expand_path(File.dirname(__FILE__))
+project_home = File.expand_path(File.join(test_home, '..'))
+gemfile_path = File.join(test_home, 'data', 'Gemfile')
+
+gem_names = `#{ File.join(test_home, 'list_all') }`.split("\n")
+
+FileUtils.mkdir_p File.dirname(gemfile_path)
+File.open(gemfile_path, 'w') do |f|
+  f.puts %{source "https://rubygems.org"}
+  gem_names.each do |gem_name|
+    f.puts %{gem "#{gem_name}"}
+  end
+end
+
+puts " * Generated gemfile at #{gemfile_path}"
