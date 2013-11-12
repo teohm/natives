@@ -1,0 +1,22 @@
+#!/bin/bash
+
+BIN_HOME="$( cd "$( dirname "$0" )" && pwd )"
+TEST_HOME="$( cd "$BIN_HOME/.." && pwd )"
+LOG_HOME="$TEST_HOME/logs"
+
+for dir in $TEST_HOME/images/*/
+do
+  image_name=$(basename $dir)
+
+  log_dir="$LOG_HOME/$image_name"
+  echo " * Cleaning up logs: $log_dir .."
+  mkdir -p $log_dir
+  rm -rf $log_dir/*
+
+  gems="$( $BIN_HOME/list_all )"
+  echo " * To test entries in $image_name image: $gems"
+  for gem_name in $gems
+  do
+    $BIN_HOME/test_entry $image_name $gem_name
+  done
+done

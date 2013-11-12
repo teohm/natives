@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+
+BIN_HOME="$( cd "$( dirname "$0" )" && pwd )"
+PROJECT_HOME="$( cd $BIN_HOME/../.. && pwd )"
+
+gem_name=$1
+echo " * Gem: $gem_name"
+
+native_packages="$( $PROJECT_HOME/bin/natives list $gem_name )"
+echo " * Native packages: $native_packages"
+
+if [ -n "$native_packages" ]; then
+  echo " * Installing native packages.."
+  max_retry=3
+  retry_count=0
+  last_status='err'
+  while [ $retry_count -lt $max_retry ]; do
+    retry_count=$[$retry_count+1]
+    echo " * Attempt: $retry_count of $max_retry"
+
+    apt-get install -y $native_packages
+
+    if [ $? -eq 0 ]; then
+      last_status='ok'
+      break
+    fi
+  done
+  if [ $last_status == 'err' ]; then
+    echo " * Abort. Error when installing native packages."
+    return 1
+  fi
+fi
+
+echo " * Installing gems.."
+gem install --verbose $gem_name
+
+EXIT_CODE=$?
+echo " * Exit code: $EXIT_CODE"
+
+echo ""
+if [ $EXIT_CODE -eq 0 ]; then
+  echo "SUCCESS"
+else
+  echo "FAILED"
+fi

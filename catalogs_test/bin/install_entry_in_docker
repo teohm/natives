@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+BIN_HOME="$( cd "$( dirname "$0" )" && pwd )"
+
+image=$1
+gem_name=$2
+
+docker run \
+  -v /vagrant:/vagrant \
+  $image \
+  $BIN_HOME/install_entry $gem_name

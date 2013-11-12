@@ -1,11 +1,10 @@
 #!/usr/bin/env ruby
 
-require 'psych'
 require 'yaml'
 require 'fileutils'
 
-test_home = File.expand_path(File.dirname(__FILE__))
-project_home = File.expand_path(File.join(test_home, '..'))
+bin_home = File.dirname(__FILE__)
+project_home = File.expand_path(File.join(bin_home, '..', '..'))
 
 rubygems_catalog_file = File.join(
   project_home, 'catalogs', 'rubygems.yaml')

@@ -1,0 +1,13 @@
+#!/bin/bash
+
+BIN_HOME="$( cd "$( dirname "$0" )" && pwd )"
+TEST_HOME="$( cd "$BIN_HOME/.." && pwd )"
+
+for dir in $TEST_HOME/images/*/
+do
+  cd $dir &&
+  image_name=${PWD##*/} && # to assign to a variable
+  echo "Building $image_name from $dir" &&
+  docker build -t natives/$image_name .
+  docker push natives/$image_name
+done

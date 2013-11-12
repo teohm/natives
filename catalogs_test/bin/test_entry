@@ -1,0 +1,29 @@
+#!/bin/bash
+
+BIN_HOME="$( cd "$( dirname "$0" )" && pwd )"
+TEST_HOME="$( cd "$BIN_HOME/.." && pwd )"
+LOG_HOME="$TEST_HOME/logs"
+
+image_name=$1
+gem_name=$2
+log_dir="$LOG_HOME/$image_name"
+
+echo " * Removing previous log file.."
+rm $log_dir/$gem_name*.log
+
+echo " * Installing $gem_name gem in $image_name .."
+$BIN_HOME/install_entry_in_docker "natives/$image_name" $gem_name | \
+  tee $log_dir/$gem_name.log
+
+echo " * Appending test status to log filename.."
+test_status=$( tail -n1 $log_dir/$gem_name.log )
+new_log_file="$gem_name-FAILED.log"
+if [ "$test_status" == "SUCCESS" ]; then
+  new_log_file="$gem_name-SUCCESS.log"
+elif [ "$test_status" == "FAILED" ]; then
+  new_log_file="$gem_name-FAILED.log"
+else
+  new_log_file="$gem_name-ERROR.log"
+fi
+mv $log_dir/$gem_name.log $log_dir/$new_log_file
+

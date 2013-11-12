@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-TEST_HOME="$( cd "$( dirname "$0" )" && pwd )"
-
-rm -rf $TEST_HOME/data
-echo " * Removed data/ directory."

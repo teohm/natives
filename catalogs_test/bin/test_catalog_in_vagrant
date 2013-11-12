@@ -1,0 +1,3 @@
+#!/bin/bash
+
+vagrant ssh -c '/vagrant/catalogs_test/bin/test_catalog'
