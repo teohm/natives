@@ -1,0 +1,12 @@
+#!/bin/bash
+
+BIN_HOME="$( cd "$( dirname "$0" )" && pwd )"
+TEST_HOME="$( cd "$BIN_HOME/.." && pwd )"
+
+for dir in $TEST_HOME/images/*/
+do
+  cd $dir &&
+  image_name=${PWD##*/} && # to assign to a variable
+  echo "Pulling $image_name from docker's index repo" &&
+  docker pull natives/$image_name
+done

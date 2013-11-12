@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+set -e
+
+vagrant up
+vagrant ssh -c '/vagrant/catalogs_test/bin/pull_images'
