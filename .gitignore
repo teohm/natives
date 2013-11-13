@@ -15,7 +15,7 @@ doc
 # jeweler generated
 pkg
 
-.natives
+natives-catalogs
 .vagrant
 
 # Have editor/IDE/OS specific files you need to ignore? Consider using a global gitignore:

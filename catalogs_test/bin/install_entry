@@ -3,6 +3,9 @@
 BIN_HOME="$( cd "$( dirname "$0" )" && pwd )"
 PROJECT_HOME="$( cd $BIN_HOME/../.. && pwd )"
 
+echo " * Run: natives detect"
+$PROJECT_HOME/bin/natives detect
+
 gem_name=$1
 echo " * Gem: $gem_name"
 
