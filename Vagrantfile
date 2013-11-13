@@ -18,10 +18,10 @@ Vagrant::Config.run do |config|
   # Provision docker and new kernel if deployment was not done.
   # It is assumed Vagrant can successfully launch the provider instance.
   if Dir.glob("#{File.dirname(__FILE__)}/.vagrant/machines/default/*/id").empty?
-    # Add lxc-docker package
+    # Add lxc-docker and parallel package
     pkg_cmd = "wget -q -O - https://get.docker.io/gpg | apt-key add -;" \
       "echo deb http://get.docker.io/ubuntu docker main > /etc/apt/sources.list.d/docker.list;" \
-      "apt-get update -qq; apt-get install -q -y --force-yes lxc-docker; "
+      "apt-get update -qq; apt-get install -q -y --force-yes lxc-docker parallel; "
     # Add Ubuntu raring backported kernel
     pkg_cmd << "apt-get update -qq; apt-get install -q -y linux-image-generic-lts-raring; "
     # Add guest additions if local vbox VM. As virtualbox is the default provider,

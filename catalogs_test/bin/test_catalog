@@ -16,9 +16,11 @@ done
 
 gems="$( $BIN_HOME/list_all )"
 
-for image_name in $image_names; do
-  for gem in $gems; do
-    $BIN_HOME/test_entry $image_name $gem
-  done
-done
+#for image_name in $image_names; do
+  #for gem in $gems; do
+    #$BIN_HOME/test_entry $image_name $gem
+  #done
+#done
 
+# Experimental: run test in parallel
+parallel --gnu -j+0 $BIN_HOME/test_entry ::: $image_names ::: $gems
