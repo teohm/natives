@@ -3,6 +3,7 @@
 [![Gem Version](https://badge.fury.io/rb/natives.png)](http://badge.fury.io/rb/natives)
 [![Code Climate](https://codeclimate.com/github/teohm/natives.png)](https://codeclimate.com/github/teohm/natives)
 [![Build Status](https://travis-ci.org/teohm/natives.png)](https://travis-ci.org/teohm/natives)
+[![Dependency Status](https://gemnasium.com/teohm/natives.png)](https://gemnasium.com/teohm/natives)
 
 List native packages required by ruby gems on your machine.
 
