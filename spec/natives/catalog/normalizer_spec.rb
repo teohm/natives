@@ -118,7 +118,7 @@ describe "Catalog Normalizer" do
       expect {
         normalizer.normalize({
           "macports" => {
-            "ubuntu" => nil
+            "ubuntu" => "invalid"
           }
         })
       }.to raise_error Natives::InvalidCatalogFormat
