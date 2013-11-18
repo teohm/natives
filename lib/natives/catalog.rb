@@ -38,7 +38,7 @@ module Natives
     def native_packages_for(*entry_names)
       packages = Array(entry_names).flatten.map do |entry_name|
         Selector.new(self.to_hash.fetch(entry_name, {})).
-          value_for(@platform, @platform_version, @package_provider)
+          values_for(@package_provider, @platform, @platform_version)
       end
       packages.flatten.compact
     end

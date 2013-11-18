@@ -10,7 +10,6 @@ group :development do
   gem "rspec"
   gem "yard"
   gem "rdoc"
-  gem "bundler"
   gem "jeweler"
   gem "debugger"
   gem "simplecov"

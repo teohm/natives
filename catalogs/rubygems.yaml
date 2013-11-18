@@ -1,74 +1,55 @@
 rubygems:
   capybara-webkit:
-    mac_os_x/macports:
-      default:
-        - qt4-mac-devel
-    mac_os_x/homebrew:
-      default:
-        - qt
-    debian/apt:
-      default:
-        - libqtwebkit-dev
-    ubuntu/apt:
+    macports:
+      mac_os_x:
+        default:
+          - qt4-mac-devel
+    homebrew:
+      mac_os_x:
+        default:
+          - qt
+    apt:
       default:
         - libqtwebkit-dev
   curb:
-    debian/apt:
-      default:
-        - libcurl4-openssl-dev
-    ubuntu/apt:
+    apt:
       default:
         - libcurl4-openssl-dev
   nokogiri:
-    debian/apt:
-      default:
-        - libxslt-dev
-        - libxml2-dev
-    ubuntu/apt:
+    apt:
       default:
         - libxslt-dev
         - libxml2-dev
   pg:
-    mac_os_x/homebrew:
-      default:
-        - postgres
-    debian/apt:
-      default:
-        - libpq-dev
-    ubuntu/apt:
+    homebrew:
+      mac_os_x:
+        default:
+          - postgres
+    apt:
       default:
         - libpq-dev
   rmagick:
-    mac_os_x/homebrew:
-      default:
-        - imagemagick
-    debian/apt:
-      default:
-        - imagemagick
-        - libmagickwand-dev
-    ubuntu/apt:
+    homebrew:
+      mac_os_x:
+        default:
+          - imagemagick
+    apt:
       default:
         - imagemagick
         - libmagickwand-dev
   tesseract-ocr:
-    mac_os_x/homebrew:
-      default:
-        - tesseract
-    debian/apt:
-      default:
-        - libtesseract-dev
-        - libleptonica-dev
-    ubuntu/apt:
+    homebrew:
+      mac_os_x:
+        default:
+          - tesseract
+    apt:
       default:
         - libtesseract-dev
         - libleptonica-dev
   sqlite3:
-    debian/apt:
+    apt:
       default:
         - libsqlite3-dev
-    ubuntu/apt:
-      default:
-        - libsqlite3-dev
-    fedora/yum:
+    yum:
       default:
         - sqlite-devel

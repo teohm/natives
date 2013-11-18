@@ -60,10 +60,12 @@ $ cd rails_app1
 $ cat natives-catalogs/catalog1.yaml
 rubygems:
   my_gem:
-    mac_os_x/homebrew:
-      - package1
-    ubuntu/apt:
-      - package2
+    homebrew:
+      mac_os_x:
+        - package1
+    apt:
+      default:
+        - package2
 
 $ natives list my_gem   # runs on mac os x
 package1
@@ -85,16 +87,17 @@ It loads YAML files (.yaml, .yml) from the following paths in this order:
 
 When there are multiple YAML files in a path, they are **sorted by filename** and loaded in that order.
 
-### Catalog file format
+### Catalog YAML format
 
 A catalog file is written in YAML, based on this format:
 
 ```
 catalog_name:
   entry_name:
-    platform/package_provider:
-      version:
-        - package_name
+    package_provider:
+      platform:
+        platform_version:
+          - package_name
 ```
 
 For example,
@@ -102,9 +105,10 @@ For example,
 ```
 rubygems:
   capybara-webkit:
-    mac_os_x/homebrew:
-      10.7.5:
-        - libqtwebkit-dev
+    homebrew:
+      mac_os_x:
+        10.7.5:
+          - libqtwebkit-dev
 ```
 
 #### Use `default` when apply to all platforms
@@ -112,79 +116,87 @@ rubygems:
 ```
 rubygems:
   curb:
-    default:
-      - curl
+    apt:
+      default:
+        - libcurl4-openssl-dev
+
 ```
 
-#### Use `default` when apply to all versions
+#### Use `default` when apply to all platform versions
 
 ```
 rubygems:
   capybara-webkit:
-    mac_os_x/homebrew:
-      default:
-        - libqtwebkit-dev
+    homebrew:
+      mac_os_x:
+        default:
+          - libqtwebkit-dev
 ```
 
-#### Use array to group platforms
-
-```
-rubygems:
-  capybara-webkit:
-    [ubuntu/apt, debian/apt]:
-      default:
-        - libqtwebkit-dev
-```
-
-#### Use array to group versions
-
-
+#### Use array to group platform versions
 
 ```
 rubygems:
   capybara-webkit:
-    ubuntu/apt:
-      [10.04, 10.04.1, 10.04.2, 10.04.3, 10.04.4]:
-        - libqt4-dev
-      default:
-        - libqtwebkit-dev
+    apt:
+      ubuntu:
+        [10.04, 10.04.1, 10.04.2, 10.04.3, 10.04.4]:
+          - libqt4-dev
+        default:
+          - libqtwebkit-dev
 ```
 
 
-#### Supported values for platform/package_provider
+#### Supported values for platforms and package providers
 
 Not in the list? No worry, submit a PR to patch [`host_detection/package_provider.rb`](https://github.com/teohm/natives/blob/master/lib/natives/host_detection/package_provider.rb).
 
+##### Package providers
 ```
-aix/aix
-amazon/yum
-arch/pacman
-centos/yum
-debian/apt
-fedora/yum
-freebsd/freebsd
-gcel/apt
-gentoo/portage
-linaro/apt
-linuxmint/apt
-mac_os_x/homebrew
-mac_os_x/macports
-mac_os_x_server/macports
-nexentacore/solaris
-omnios/ips
-openindiana/ips
-opensolaris/ips
-opensuse/zypper
-oracle/yum
-raspbian/apt
-redhat/yum
-scientific/yum
-smartos/smartos
-solaris2/ips
-suse/zypper
-ubuntu/apt
-xcp/yum
-xenserver/yum
+aix
+yum
+packman
+apt
+feebsd
+portage
+homebrew
+macports
+solaris
+ips
+zypper
+smartos
+```
+
+##### Platforms
+```
+aix
+amazon
+arch
+centos
+debian
+fedora
+freebsd
+gcel
+gentoo
+linaro
+linuxmint
+mac_os_x
+mac_os_x_server
+nexentacore
+omnios
+openindiana
+opensolaris
+opensuse
+oracle
+raspbian
+redhat
+scientific
+smartos
+solaris2
+suse
+ubuntu
+xcp
+xenserver
 ```
 
 

@@ -93,14 +93,18 @@ describe Natives::Catalog do
         and_return({
           'rubygems' => {
             'nokogiri' => {
-              'ubuntu/apt' => {
-                '13.10' => 'value1',
-                'default' => 'value2'
+              'apt' => {
+                'ubuntu' => {
+                  '13.10' => 'value1',
+                  'default' => 'value2'
+                }
               }
             },
             'curb' => {
-              'ubuntu/apt' => {
-                'default' => 'value3'
+              'apt' => {
+                'ubuntu' => {
+                  'default' => 'value3'
+                }
               }
             }
           },
