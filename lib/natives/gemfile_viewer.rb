@@ -3,8 +3,8 @@ require 'bundler'
 module Natives
   class GemfileViewer
     def initialize(gemfile_path)
-      @gemfile_path = gemfile_path
-      @lockfile_path = "#{gemfile_path}.lock"
+      @gemfile_path = File.expand_path(gemfile_path)
+      @lockfile_path = "#{@gemfile_path}.lock"
     end
 
     def gem_names
