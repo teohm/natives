@@ -14,6 +14,12 @@ describe Natives::Catalog::Selector do
             'default' => %w(ubuntu-default1 ubuntu-default2)
           }
         },
+        macports: {
+          default: 'macports-default',
+          mac_os_x: {
+            '10' => 'bar'
+          }
+        },
         homebrew: {
           mac_os_x: {
             '10' => 'foo'
@@ -22,30 +28,100 @@ describe Natives::Catalog::Selector do
       })
     end
 
-    it "returns values for a specific platform version" do
-      expect(selector.values_for(:apt, :ubuntu, :'12.10')).to eq(
-        ['ubuntu-12.10'])
+    it "returns values for matching platform version" do
+      selector = Natives::Catalog::Selector.new({
+        apt: {
+          ubuntu: {
+            '12.10' => 'value'
+          }
+        }
+      })
+      expect(selector.values_for(:apt, :ubuntu, '12.10')).to eq(
+        ['value'])
     end
-    it "returns a value for a specific platform version in version group" do
-      expect(selector.values_for(:apt, :ubuntu, :'10.10.1')).to eq(
-        ['ubuntu-10.10s'])
+
+    it "returns a value for matching platform version in version list" do
+      selector = Natives::Catalog::Selector.new({
+        apt: {
+          ubuntu: {
+            ['12.10.1', '12.10', '12.10.2'] => 'value'
+          }
+        }
+      })
+      expect(selector.values_for(:apt, :ubuntu, '12.10')).to eq(
+        ['value'])
     end
+
     it "returns default version values when no matching platform version" do
-      expect(selector.values_for('apt', 'ubuntu', '13')).to eq(
-        ['ubuntu-default1', 'ubuntu-default2'])
+      selector = Natives::Catalog::Selector.new({
+        apt: {
+          ubuntu: {
+            ['12.10.1', '12.10', '12.10.2'] => 'value',
+            default: 'value-default'
+          }
+        }
+      })
+      expect(selector.values_for(:apt, :ubuntu, '99')).to eq(
+        ['value-default'])
     end
+
     it "returns default value when not matching platform" do
-      expect(selector.values_for(:apt, :foo, :'13')).to eq(
-        ['apt-default'])
+      selector = Natives::Catalog::Selector.new({
+        apt: {
+          ubuntu: {
+            ['12.10.1', '12.10', '12.10.2'] => 'ubuntu-value',
+            default: 'ubuntu-value-default'
+          },
+          default: 'value'
+        }
+      })
+      expect(selector.values_for(:apt, :foo, '12.10.1')).to eq(
+        ['value'])
     end
+
+    it "returns default value when not matching platform version, and no version default value" do
+      selector = Natives::Catalog::Selector.new({
+        apt: {
+          ubuntu: {
+            ['12.10.1', '12.10', '12.10.2'] => 'ubuntu-value',
+          },
+          default: 'value'
+        }
+      })
+      expect(selector.values_for(:apt, :ubuntu, '99')).to eq(
+        ['value'])
+    end
+
     it "returns empty list if there is no matching package provider" do
-      expect(selector.values_for(:notfound, :ubuntu, '10')).to eq([])
+      selector = Natives::Catalog::Selector.new({
+        apt: {
+          ubuntu: {
+            default: 'value'
+          }
+        }
+      })
+      expect(selector.values_for(:foo, :ubuntu, '99')).to eq([])
     end
-    it "returns nil if there is no default and no matching platform" do
-      expect(selector.values_for(:homebrew, :notfound, 1)).to eq([])
+
+    it "returns empty list if there is no default and no matching platform" do
+      selector = Natives::Catalog::Selector.new({
+        apt: {
+          ubuntu: {
+            '10.10' => 'value'
+          }
+        }
+      })
+      expect(selector.values_for(:apt, :foo, '10.10')).to eq([])
     end
-    it "returns nil if there is no default and no matching platform version" do
-      expect(selector.values_for(:homebrew, :mac_os_x, '999')).to eq([])
+    it "returns empty list if there is no default and no matching platform version" do
+      selector = Natives::Catalog::Selector.new({
+        apt: {
+          ubuntu: {
+            '10.10' => 'value'
+          }
+        }
+      })
+      expect(selector.values_for(:apt, :ubuntu, '99')).to eq([])
     end
   end
 end

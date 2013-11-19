@@ -12,17 +12,23 @@ module Natives
         platform = platform.to_s
         platform_version = platform_version.to_s
 
-        values = nil
-        platforms = @values.fetch(package_provider, nil)
-        if platforms
-          versions  = platforms.fetch(platform, nil)
-          if versions
-            values = versions.fetch(platform_version, nil) ||
-              versions.fetch('default', nil)
-          else
-            values = platforms.fetch('default', nil)
-          end
-        end
+        values = if @values.key?(package_provider) &&
+                   @values[package_provider].key?(platform) &&
+                   @values[package_provider][platform].key?(platform_version)
+
+                   @values[package_provider][platform][platform_version]
+
+                 elsif @values.key?(package_provider) &&
+                   @values[package_provider].key?(platform) &&
+                   @values[package_provider][platform].key?('default')
+
+                   @values[package_provider][platform]['default']
+
+                 elsif @values.key?(package_provider) &&
+                   @values[package_provider].key?('default')
+
+                   @values[package_provider]['default']
+                 end
 
         Array(values)
       end
