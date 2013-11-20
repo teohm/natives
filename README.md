@@ -199,6 +199,11 @@ xcp
 xenserver
 ```
 
+## Related work
+
+* [gem-nice-install](https://github.com/voxik/gem-nice-install/) - uses
+  rubygems plugin API to auto-install natives dependencies, now supports
+  fedora only.
 
 ## Contributing to natives
 
