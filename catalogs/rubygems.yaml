@@ -11,6 +11,13 @@ rubygems:
     apt:
       default:
         - libqtwebkit-dev
+  charlock_holmes:
+    apt:
+      default:
+        - libicu-dev
+    homebrew:
+      default:
+        - icu4c
   curb:
     apt:
       default:
